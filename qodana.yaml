@@ -4,3 +4,4 @@ profile:
 include:
   - name: CheckDependencyLicenses
   - name: CheckModuleLicenses
+  - name: UnnecessarySemicolon
