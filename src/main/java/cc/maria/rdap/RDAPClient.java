@@ -17,6 +17,7 @@
 package cc.maria.rdap;
 
 import cc.maria.rdap.bootstrap.DomainBootstrapRegistry;
+
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 
