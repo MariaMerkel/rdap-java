@@ -20,7 +20,7 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class DomainBootstrapRegistryTest {
+public class DomainBootstrapRegistryTests {
     /**
      * Tests retrieval of a label-service mapping that appears as a single-label entry on the bootstrap registry
      */
