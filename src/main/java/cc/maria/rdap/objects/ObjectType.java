@@ -20,5 +20,5 @@ public enum ObjectType {
     ASN,
     DOMAIN,
     IPv4,
-    IPv6;
+    IPv6
 }
