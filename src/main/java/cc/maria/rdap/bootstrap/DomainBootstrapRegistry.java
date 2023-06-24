@@ -20,6 +20,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.HashMap;
 
@@ -36,7 +37,7 @@ public class DomainBootstrapRegistry {
      *
      * @return DomainBootstrapRegistry instance
      */
-    public static DomainBootstrapRegistry getInstance() {
+    public static DomainBootstrapRegistry getInstance () {
         if (instance == null) refresh();
 
         return instance;
@@ -47,7 +48,7 @@ public class DomainBootstrapRegistry {
      *
      * @return DomainBootstrapRegistry instance
      */
-    public static DomainBootstrapRegistry refresh() {
+    public static DomainBootstrapRegistry refresh () {
         try {
             instance = new DomainBootstrapRegistry();
         } catch (IOException e) {
@@ -62,14 +63,16 @@ public class DomainBootstrapRegistry {
     }
 
     private DomainBootstrapRegistry (URL url) throws IOException {
-        JSONObject json = new JSONObject(new String(url.openStream().readAllBytes()));
-        JSONArray services = json.getJSONArray("services");
+        try (InputStream inputStream = url.openStream()) {
+            JSONObject json = new JSONObject(new String(inputStream.readAllBytes()));
+            JSONArray services = json.getJSONArray("services");
 
-        for (Object a : services) {
-            JSONArray array = (JSONArray) a;
+            for (Object a : services) {
+                JSONArray array = (JSONArray) a;
 
-            for (Object s : array.getJSONArray(0)) {
-                labelToServiceMap.put((String) s, ((JSONArray) array.get(1)).getString(0));
+                for (Object s : array.getJSONArray(0)) {
+                    labelToServiceMap.put((String) s, ((JSONArray) array.get(1)).getString(0));
+                }
             }
         }
     }
