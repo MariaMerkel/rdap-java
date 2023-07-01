@@ -14,10 +14,12 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.bootstrap;
+package cc.maria.rdap.client;
 
 import cc.maria.rdap.RDAPClient;
+import cc.maria.rdap.bootstrap.DomainBootstrapRegistry;
 import jakarta.ws.rs.client.ClientBuilder;
+import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -27,7 +29,7 @@ public class ClientConfigurationTests {
     public void testDefaultClient () {
         RDAPClient client = new RDAPClient();
         assertNotNull(client);
-        assertEquals(client.getServiceURL("example.com"), DomainBootstrapRegistry.getInstance(ClientBuilder.newClient()).getServiceURLForFQDN("example.com"));
+        Assert.assertEquals(client.getServiceURL("example.com"), DomainBootstrapRegistry.getInstance(ClientBuilder.newClient()).getServiceURLForFQDN("example.com"));
     }
 
     @Test
