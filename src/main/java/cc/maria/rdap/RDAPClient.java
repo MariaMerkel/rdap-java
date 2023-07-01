@@ -18,8 +18,10 @@ package cc.maria.rdap;
 
 import cc.maria.rdap.bootstrap.DomainBootstrapRegistry;
 
+import cc.maria.rdap.http.RDAPRequestFilter;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
+import jakarta.ws.rs.client.WebTarget;
 
 public class RDAPClient {
     private String serviceURL = null;
@@ -36,6 +38,7 @@ public class RDAPClient {
     }
 
     public RDAPClient (Client client) {
+        client.register(RDAPRequestFilter.class);
         this.client = client;
     }
 
@@ -49,6 +52,10 @@ public class RDAPClient {
         this.serviceURL = serviceURL;
     }
 
+    public void sendTestRequest () {
+        getWebTarget("example.com").path("domain/example.com").request().get();
+    }
+
     /**
      * Get the service URL for a given object.
      * If the service URL is not set, the service URL will be looked up from the bootstrap registry.
@@ -60,5 +67,9 @@ public class RDAPClient {
     public String getServiceURL (String object) {
         if (serviceURL != null) return serviceURL;
         return DomainBootstrapRegistry.getInstance().getServiceURLForFQDN(object);
+    }
+
+    public WebTarget getWebTarget (String object) {
+        return client.target(getServiceURL(object));
     }
 }
