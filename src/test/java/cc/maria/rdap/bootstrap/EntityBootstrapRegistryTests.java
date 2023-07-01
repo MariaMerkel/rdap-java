@@ -56,4 +56,12 @@ public class EntityBootstrapRegistryTests {
     public void testInvalidHandle () {
         assertNull(EntityBootstrapRegistry.getInstance(testClient).getServiceURLForHandle("EXAMPLE-INVALID"));
     }
+
+    /**
+     * Test resolution of service for a handle that does not include a tag
+     */
+    @Test
+    public void testHandleWithoutTag () {
+        assertNull(EntityBootstrapRegistry.getInstance(testClient).getServiceURLForHandle("EXAMPLE"));
+    }
 }
