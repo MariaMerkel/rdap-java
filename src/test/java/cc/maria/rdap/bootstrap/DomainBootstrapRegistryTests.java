@@ -16,17 +16,21 @@
 
 package cc.maria.rdap.bootstrap;
 
+import jakarta.ws.rs.client.Client;
+import jakarta.ws.rs.client.ClientBuilder;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class DomainBootstrapRegistryTests {
+    private static Client testClient = ClientBuilder.newClient();
+
     /**
      * Tests retrieval of a label-service mapping that appears as a single-label entry on the bootstrap registry
      */
     @Test
     public void testValidLabelFromSingleEntry () {
-        assertEquals(DomainBootstrapRegistry.getInstance().getServiceURL("com"), "https://rdap.verisign.com/com/v1/");
+        assertEquals(DomainBootstrapRegistry.getInstance(testClient).getServiceURL("com"), "https://rdap.verisign.com/com/v1/");
     }
 
     /**
@@ -34,7 +38,7 @@ public class DomainBootstrapRegistryTests {
      */
     @Test
     public void testValidLabelFromMultiEntry () {
-        assertEquals(DomainBootstrapRegistry.getInstance().getServiceURL("dev"), "https://www.registry.google/rdap/");
+        assertEquals(DomainBootstrapRegistry.getInstance(testClient).getServiceURL("dev"), "https://www.registry.google/rdap/");
     }
 
     /**
@@ -42,7 +46,7 @@ public class DomainBootstrapRegistryTests {
      */
     @Test
     public void testInvalidLabel () {
-        assertNull(DomainBootstrapRegistry.getInstance().getServiceURL("invalid"));
+        assertNull(DomainBootstrapRegistry.getInstance(testClient).getServiceURL("invalid"));
     }
 
     /**
@@ -50,7 +54,7 @@ public class DomainBootstrapRegistryTests {
      */
     @Test
     public void testValidSLD () {
-        assertEquals(DomainBootstrapRegistry.getInstance().getServiceURLForFQDN("example.com"), "https://rdap.verisign.com/com/v1/");
+        assertEquals(DomainBootstrapRegistry.getInstance(testClient).getServiceURLForFQDN("example.com"), "https://rdap.verisign.com/com/v1/");
     }
 
     /**
@@ -58,7 +62,7 @@ public class DomainBootstrapRegistryTests {
      */
     @Test
     public void testInvalidSLD () {
-        assertNull(DomainBootstrapRegistry.getInstance().getServiceURLForFQDN("example.invalid"));
+        assertNull(DomainBootstrapRegistry.getInstance(testClient).getServiceURLForFQDN("example.invalid"));
     }
 
     /**
@@ -66,7 +70,7 @@ public class DomainBootstrapRegistryTests {
      */
     @Test
     public void testValidFQDN () {
-        assertEquals(DomainBootstrapRegistry.getInstance().getServiceURLForFQDN("example.sub.example.com"), "https://rdap.verisign.com/com/v1/");
+        assertEquals(DomainBootstrapRegistry.getInstance(testClient).getServiceURLForFQDN("example.sub.example.com"), "https://rdap.verisign.com/com/v1/");
     }
 
     /**
@@ -74,6 +78,6 @@ public class DomainBootstrapRegistryTests {
      */
     @Test
     public void testInvalidFQDN () {
-        assertNull(DomainBootstrapRegistry.getInstance().getServiceURLForFQDN("example.sub.example.invalid"));
+        assertNull(DomainBootstrapRegistry.getInstance(testClient).getServiceURLForFQDN("example.sub.example.invalid"));
     }
 }

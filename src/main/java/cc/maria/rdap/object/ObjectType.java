@@ -14,7 +14,7 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.objects;
+package cc.maria.rdap.object;
 
 public enum ObjectType {
     ASN,

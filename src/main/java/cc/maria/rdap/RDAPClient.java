@@ -66,7 +66,7 @@ public class RDAPClient {
      */
     public String getServiceURL (String object) {
         if (serviceURL != null) return serviceURL;
-        return DomainBootstrapRegistry.getInstance().getServiceURLForFQDN(object);
+        return DomainBootstrapRegistry.getInstance(client).getServiceURLForFQDN(object);
     }
 
     public WebTarget getWebTarget (String object) {

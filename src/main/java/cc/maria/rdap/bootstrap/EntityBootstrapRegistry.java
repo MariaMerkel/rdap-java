@@ -21,17 +21,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
 import java.util.HashMap;
 
 /**
- * RFC 9224-compliant wrapper around the IANA RDAP Bootstrap Service Registry for the Domain Name Space
+ * RFC 8521-compliant wrapper around the IANA RDAP Bootstrap Service Registry for Entities
  */
-public class DomainBootstrapRegistry {
-    private HashMap<String, String> labelToServiceMap = new HashMap<>();
+public class EntityBootstrapRegistry {
+    private HashMap<String, String> tagToServiceMap = new HashMap<>();
 
-    private static HashMap<Client, DomainBootstrapRegistry> instances = new HashMap<>();
+    private static HashMap<Client, EntityBootstrapRegistry> instances = new HashMap<>();
 
     /**
      * Get current instance of the wrapper
@@ -40,7 +38,7 @@ public class DomainBootstrapRegistry {
      *
      * @return DomainBootstrapRegistry instance
      */
-    public static DomainBootstrapRegistry getInstance (Client client) {
+    public static EntityBootstrapRegistry getInstance (Client client) {
         if (!instances.containsKey(client)) refresh(client);
 
         return instances.get(client);
@@ -53,9 +51,9 @@ public class DomainBootstrapRegistry {
      *
      * @return DomainBootstrapRegistry instance
      */
-    public static DomainBootstrapRegistry refresh (Client client) {
+    public static EntityBootstrapRegistry refresh (Client client) {
         try {
-            instances.put(client, new DomainBootstrapRegistry(client));
+            instances.put(client, new EntityBootstrapRegistry(client));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -63,42 +61,42 @@ public class DomainBootstrapRegistry {
         return instances.get(client);
     }
 
-    private DomainBootstrapRegistry (Client client) throws IOException {
-        this (client, "https://data.iana.org/rdap/dns.json");
+    private EntityBootstrapRegistry(Client client) throws IOException {
+        this (client, "https://data.iana.org/rdap/object-tags.json");
     }
 
-    private DomainBootstrapRegistry (Client client, String url) {
+    private EntityBootstrapRegistry(Client client, String url) {
         JSONObject json = new JSONObject(client.target(url).request().get().readEntity(String.class));
         JSONArray services = json.getJSONArray("services");
 
         for (Object a : services) {
             JSONArray array = (JSONArray) a;
 
-            for (Object s : array.getJSONArray(0)) {
-                labelToServiceMap.put((String) s, ((JSONArray) array.get(1)).getString(0));
+            for (Object s : array.getJSONArray(1)) {
+                tagToServiceMap.put((String) s, ((JSONArray) array.get(2)).getString(0));
             }
         }
     }
 
     /**
-     * Get the RDAP service URL for a given label
+     * Get the RDAP service URL for a given tag
      *
-     * @param label label to look up
+     * @param tag tag to look up
      * @return RDAP service URL
      */
-    public String getServiceURL (String label) {
-        return labelToServiceMap.get(label);
+    public String getServiceURL (String tag) {
+        return tagToServiceMap.get(tag);
     }
 
     /**
-     * Get the RDAP service URL for a given FQDN
+     * Get the RDAP service URL for a given handle
      *
-     * @param fqdn FQDN to look up
+     * @param handle Handle to look up
      * @return RDAP service URL
      */
-    public String getServiceURLForFQDN (String fqdn) {
-        if (labelToServiceMap.containsKey(fqdn)) return labelToServiceMap.get(fqdn);
-        if (!fqdn.contains(".")) return null;
-        return getServiceURLForFQDN(fqdn.substring(fqdn.indexOf('.') + 1));
+    public String getServiceURLForHandle (String handle) {
+        String tag = handle.substring(handle.lastIndexOf('-') + 1);
+        if (!tagToServiceMap.containsKey(tag)) return null;
+        return tagToServiceMap.get(tag);
     }
 }

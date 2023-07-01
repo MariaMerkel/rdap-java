@@ -17,6 +17,7 @@
 package cc.maria.rdap.bootstrap;
 
 import cc.maria.rdap.RDAPClient;
+import jakarta.ws.rs.client.ClientBuilder;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -26,7 +27,7 @@ public class ClientConfigurationTests {
     public void testDefaultClient () {
         RDAPClient client = new RDAPClient();
         assertNotNull(client);
-        assertEquals(client.getServiceURL("example.com"), DomainBootstrapRegistry.getInstance().getServiceURLForFQDN("example.com"));
+        assertEquals(client.getServiceURL("example.com"), DomainBootstrapRegistry.getInstance(ClientBuilder.newClient()).getServiceURLForFQDN("example.com"));
     }
 
     @Test
