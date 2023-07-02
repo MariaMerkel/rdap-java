@@ -29,7 +29,8 @@ public class ClientConfigurationTests {
     public void testDefaultClient () {
         RDAPClient client = new RDAPClient();
         assertNotNull(client);
-        Assert.assertEquals(client.getServiceURL("example.com"), DomainBootstrapRegistry.getInstance(ClientBuilder.newClient()).getServiceURLForFQDN("example.com"));
+        Assert.assertEquals(client.getServiceURL("example.com"), DomainBootstrapRegistry.
+                getInstance(ClientBuilder.newClient()).getServiceURLForFQDN("example.com"));
     }
 
     @Test

@@ -16,8 +16,8 @@
 
 package cc.maria.rdap.exception;
 
-public class UnsupportedObjectTypeException extends Exception {
-    public UnsupportedObjectTypeException () {
-        super("Unsupported RDAP object type");
+public class RDAPException extends Exception {
+    RDAPException (String message) {
+        super(message);
     }
 }

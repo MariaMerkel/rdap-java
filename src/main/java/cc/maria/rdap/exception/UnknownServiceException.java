@@ -14,12 +14,10 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.object;
+package cc.maria.rdap.exception;
 
-public enum ObjectType {
-    ASN,
-    DOMAIN,
-    ENTITY,
-    IPv4,
-    IPv6
+public class UnknownServiceException extends RDAPException {
+    public UnknownServiceException() {
+        super("No service URL specified and unable to automatically determine service URL");
+    }
 }

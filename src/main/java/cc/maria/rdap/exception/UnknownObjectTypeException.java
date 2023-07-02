@@ -14,12 +14,10 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.object;
+package cc.maria.rdap.exception;
 
-public enum ObjectType {
-    ASN,
-    DOMAIN,
-    ENTITY,
-    IPv4,
-    IPv6
+public class UnknownObjectTypeException extends RDAPException {
+    public UnknownObjectTypeException () {
+        super("No object type specified and unable to automatically determine object type");
+    }
 }

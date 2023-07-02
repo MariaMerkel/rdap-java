@@ -17,6 +17,7 @@
 package cc.maria.rdap.bootstrap;
 
 import jakarta.ws.rs.client.Client;
+import org.apache.commons.net.util.SubnetUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -24,21 +25,21 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * RFC 8521-compliant wrapper around the IANA RDAP Bootstrap Service Registry for Entities
+ * RFC 9224-compliant wrapper around the IANA RDAP Bootstrap Service Registry for the IPv4 address space
  */
-public class EntityBootstrapRegistry {
-    private HashMap<String, String> tagToServiceMap = new HashMap<>();
+public class IPv4BootstrapRegistry {
+    private HashMap<String, String> subnetsToServiceMap = new HashMap<>();
 
-    private static HashMap<Client, EntityBootstrapRegistry> instances = new HashMap<>();
+    private static HashMap<Client, IPv4BootstrapRegistry> instances = new HashMap<>();
 
     /**
      * Get current instance of the wrapper
      *
      * @param client HTTP client for fetching bootstrap data
      *
-     * @return EntityBootstrapRegistry instance
+     * @return IPv4BootstrapRegistry instance
      */
-    public static EntityBootstrapRegistry getInstance (Client client) {
+    public static IPv4BootstrapRegistry getInstance (Client client) {
         if (!instances.containsKey(client)) refresh(client);
 
         return instances.get(client);
@@ -49,11 +50,11 @@ public class EntityBootstrapRegistry {
      *
      * @param client HTTP client for fetching bootstrap data
      *
-     * @return EntityBootstrapRegistry instance
+     * @return IPv4BootstrapRegistry instance
      */
-    public static EntityBootstrapRegistry refresh (Client client) {
+    public static IPv4BootstrapRegistry refresh (Client client) {
         try {
-            instances.put(client, new EntityBootstrapRegistry(client));
+            instances.put(client, new IPv4BootstrapRegistry(client));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -61,42 +62,37 @@ public class EntityBootstrapRegistry {
         return instances.get(client);
     }
 
-    private EntityBootstrapRegistry(Client client) throws IOException {
-        this (client, "https://data.iana.org/rdap/object-tags.json");
+    private IPv4BootstrapRegistry(Client client) throws IOException {
+        this (client, "https://data.iana.org/rdap/ipv4.json");
     }
 
-    private EntityBootstrapRegistry(Client client, String url) {
+    private IPv4BootstrapRegistry(Client client, String url) {
         JSONObject json = new JSONObject(client.target(url).request().get().readEntity(String.class));
         JSONArray services = json.getJSONArray("services");
 
         for (Object a : services) {
             JSONArray array = (JSONArray) a;
 
-            for (Object s : array.getJSONArray(1)) {
-                tagToServiceMap.put((String) s, ((JSONArray) array.get(2)).getString(0));
+            for (Object s : array.getJSONArray(0)) {
+                subnetsToServiceMap.put((String) s, ((JSONArray) array.get(1)).getString(0));
             }
         }
     }
 
     /**
-     * Get the RDAP service URL for a given tag
+     * Get the RDAP service URL for a given IPv4 address
      *
-     * @param tag tag to look up
+     * @param ip IP address to look up
      * @return RDAP service URL
      */
-    public String getServiceURL (String tag) {
-        return tagToServiceMap.get(tag);
-    }
+    public String getServiceURLForIP (String ip) {
+        // If a subnet is provided, we simply strip the prefix length. Provided no subnet to be looked up overlaps multiple allocations to RIRs, this should be fine
+        if (ip.contains("/")) ip = ip.split("/")[0];
 
-    /**
-     * Get the RDAP service URL for a given handle
-     *
-     * @param handle Handle to look up
-     * @return RDAP service URL
-     */
-    public String getServiceURLForHandle (String handle) {
-        String tag = handle.substring(handle.lastIndexOf('-') + 1);
-        if (!tagToServiceMap.containsKey(tag)) return null;
-        return tagToServiceMap.get(tag);
+        for (String subnet : subnetsToServiceMap.keySet()) {
+            if (new SubnetUtils(subnet).getInfo().isInRange(ip)) return subnetsToServiceMap.get(subnet);
+        }
+
+        return null;
     }
 }
