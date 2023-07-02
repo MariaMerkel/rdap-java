@@ -26,11 +26,19 @@ public class EntityBootstrapRegistryTests {
     private static Client testClient = ClientBuilder.newClient();
 
     /**
-     * Tests retrieval of a tag-service mapping that appears as a single-tag entry on the bootstrap registry
+     * Tests retrieval of a tag-service mapping that appears as a single-service entry on the bootstrap registry
      */
     @Test
     public void testValidTagFromSingleEntry () {
         assertEquals(EntityBootstrapRegistry.getInstance(testClient).getServiceURL("RIPE"), "https://rdap.db.ripe.net/");
+    }
+
+    /**
+     * Tests retrieval of a tag-service mapping that appears as a multi-service entry on the bootstrap registry
+     */
+    @Test
+    public void testValidTagFromMultiEntry () {
+        assertEquals(EntityBootstrapRegistry.getInstance(testClient).getServiceURL("ARIN"), "https://rdap.arin.net/registry/");
     }
 
     /**
