@@ -16,12 +16,10 @@
 
 package cc.maria.rdap.object;
 
-import cc.maria.rdap.bootstrap.ASNBootstrapRegistry;
-import cc.maria.rdap.bootstrap.DomainBootstrapRegistry;
-import cc.maria.rdap.bootstrap.EntityBootstrapRegistry;
-import cc.maria.rdap.bootstrap.IPv4BootstrapRegistry;
+import cc.maria.rdap.bootstrap.*;
 import cc.maria.rdap.exception.UnknownObjectTypeException;
 import cc.maria.rdap.exception.UnknownServiceException;
+import inet.ipaddr.IPAddressString;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.WebTarget;
 
@@ -53,8 +51,8 @@ public class ObjectReference {
 
         try {
             if (getType() == ObjectType.ASN) {
-                tempHandle = tempHandle.replace("AS", "");
                 tempHandle = tempHandle.replace("ASN", "");
+                tempHandle = tempHandle.replace("AS", "");
             }
         } catch (UnknownObjectTypeException ignored) {}
 
@@ -64,8 +62,11 @@ public class ObjectReference {
     public ObjectType getType () throws UnknownObjectTypeException {
         if (type != null) return type;
 
-        if (handle.startsWith ("AS")) return ObjectType.ASN;
+        if (handle.matches ("AS\\d+")) return ObjectType.ASN;
+        if (handle.matches ("ASN\\d+")) return ObjectType.ASN;
         if (handle.matches("\\d+")) return ObjectType.ASN;
+        if (handle.matches("(\\d{1,3}\\.){3}\\d{1,3}(/\\d{1,2})?")) return ObjectType.IPv4;
+        if (new IPAddressString(handle).isIPv6()) return ObjectType.IPv6;
 
         throw new UnknownObjectTypeException();
     }
@@ -99,6 +100,11 @@ public class ObjectReference {
 
             case IPv4:
                 serviceURL = IPv4BootstrapRegistry.getInstance(client).getServiceURLForIP(getHandle());
+                if (serviceURL == null) throw new UnknownServiceException();
+                return client.target(serviceURL);
+
+            case IPv6:
+                serviceURL = IPv6BootstrapRegistry.getInstance(client).getServiceURLForIP(getHandle());
                 if (serviceURL == null) throw new UnknownServiceException();
                 return client.target(serviceURL);
         }

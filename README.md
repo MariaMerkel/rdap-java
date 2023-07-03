@@ -18,7 +18,7 @@ The library will automatically make the following corrections to handles:
 - Remove any mention of AS or ASN for references of type ASN (or where the type is assumed to be ASN, so where the handle is prefixed with AS or ASN but the type is not set)
 
 The library will further attempt to detect object types by the following criteria if no object type is set:
-- ASN: Any string starting with AS or ASN
+- ASN: Any string consisting of the prefix AS or ASN followed by only digits
 - ASN: Any number
 - IPv4: Four sets of one to three digits separated by dots, optionally ending in a slash followed by a two-digit number
 - IPv6: Valid IPv6 address or subnet as determined by the [IPAddress library](https://github.com/seancfoley/IPAddress)
