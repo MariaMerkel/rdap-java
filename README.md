@@ -18,11 +18,14 @@ The library will automatically make the following corrections to handles:
 - Remove any mention of AS or ASN for references of type ASN (or where the type is assumed to be ASN, so where the handle is prefixed with AS or ASN but the type is not set)
 
 The library will further attempt to detect object types by the following criteria if no object type is set:
-- ASN: Any string starting with AS
-- ASN: Any string starting with ASN
+- ASN: Any string starting with AS or ASN
 - ASN: Any number
+- IPv4: Four sets of one to three digits separated by dots, optionally ending in a slash followed by a two-digit number
+- IPv6: Valid IPv6 address or subnet as determined by the [IPAddress library](https://github.com/seancfoley/IPAddress)
 
-Auto-detection will not occur if a type is set in the object reference. Handle corrections cannot be disabled, but if they cause issues (with the correct type set), this is a bug and should be reported accordingly.
+Auto-detection rules are evaluated in the order they are listed above and the first match is applied.
+
+Auto-detection will not occur if a type is set in the object reference. Handle corrections cannot be disabled, but if they cause issues (with the correct type set), this is a bug and should be reported accordingly. Handle corrections are ran after auto-detection and are thus applied to auto-detected types as well.
 
 ## Known Limitations
 - The client library does not implement retries in case of rate limiting (RFC 7480 5.5) because correct handling will depend on the application
@@ -30,3 +33,6 @@ Auto-detection will not occur if a type is set in the object reference. Handle c
 ## Planned Additions
 - Support for commonly used extensions (see https://www.iana.org/assignments/rdap-extensions/rdap-extensions.xhtml)
 - Detection of excessive caches and circumvention of those (see RFC 7480 Appendix B)
+
+## Javadocs
+Javadocs for each version can be found at https://javadocs.maria.dev/rdap-java/. Javadocs for snapshots will be overwritten every time a new version of the snapshot is built.
