@@ -27,19 +27,19 @@ import java.util.HashMap;
 /**
  * RFC 9224-compliant wrapper around the IANA RDAP Bootstrap Service Registry for the IPv4 address space
  */
-public class IPv4BootstrapRegistry {
+public class IPv6BootstrapRegistry {
     private HashMap<IPAddressString, String> subnetsToServiceMap = new HashMap<>();
 
-    private static HashMap<Client, IPv4BootstrapRegistry> instances = new HashMap<>();
+    private static HashMap<Client, IPv6BootstrapRegistry> instances = new HashMap<>();
 
     /**
      * Get current instance of the wrapper
      *
      * @param client HTTP client for fetching bootstrap data
      *
-     * @return IPv4BootstrapRegistry instance
+     * @return DomainBootstrapRegistry instance
      */
-    public static IPv4BootstrapRegistry getInstance (Client client) {
+    public static IPv6BootstrapRegistry getInstance (Client client) {
         if (!instances.containsKey(client)) refresh(client);
 
         return instances.get(client);
@@ -50,11 +50,11 @@ public class IPv4BootstrapRegistry {
      *
      * @param client HTTP client for fetching bootstrap data
      *
-     * @return IPv4BootstrapRegistry instance
+     * @return DomainBootstrapRegistry instance
      */
-    public static IPv4BootstrapRegistry refresh (Client client) {
+    public static IPv6BootstrapRegistry refresh (Client client) {
         try {
-            instances.put(client, new IPv4BootstrapRegistry(client));
+            instances.put(client, new IPv6BootstrapRegistry(client));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -62,11 +62,11 @@ public class IPv4BootstrapRegistry {
         return instances.get(client);
     }
 
-    private IPv4BootstrapRegistry(Client client) throws IOException {
-        this (client, "https://data.iana.org/rdap/ipv4.json");
+    private IPv6BootstrapRegistry(Client client) throws IOException {
+        this (client, "https://data.iana.org/rdap/ipv6.json");
     }
 
-    private IPv4BootstrapRegistry(Client client, String url) {
+    private IPv6BootstrapRegistry(Client client, String url) {
         JSONObject json = new JSONObject(client.target(url).request().get().readEntity(String.class));
         JSONArray services = json.getJSONArray("services");
 
@@ -80,7 +80,7 @@ public class IPv4BootstrapRegistry {
     }
 
     /**
-     * Get the RDAP service URL for a given IPv4 address
+     * Get the RDAP service URL for a given ASN
      *
      * @param ip IP address to look up
      * @return RDAP service URL
