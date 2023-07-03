@@ -37,4 +37,4 @@ Auto-detection will not occur if a type is set in the object reference. Handle c
 ## Builds and Javadocs
 Build outputs for each version can be found at https://releases.maria.dev/rdap-java/. Javadocs for each version can be found at https://javadocs.maria.dev/rdap-java/. Build outputs and Javadocs for snapshots will be overwritten every time a new version of the snapshot is built.
 
-The CI is available publicly at https://teamcity.maria.dev/project/RdapJava?guest=1. Build outputs for all snapshot builds can be found there as well.
+The CI is available publicly at https://teamcity.maria.dev/project/RdapJava?guest=1. Build outputs for all snapshot builds can be found there.
