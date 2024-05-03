@@ -111,4 +111,32 @@ public class ObjectReference {
 
         throw new UnknownServiceException();
     }
+
+    public WebTarget getObjectURL (WebTarget service) throws UnknownObjectTypeException {
+        switch (getType()) {
+            case ASN:
+                return service.path("autnum/" + getHandle());
+
+            case DOMAIN:
+                return service.path("domain/" + getHandle());
+
+            case ENTITY:
+                return service.path("entity/" + getHandle());
+
+            case IPv4:
+            case IPv6:
+                return service.path("ip/" + getHandle());
+        }
+
+        // This will never happen
+        throw new UnknownObjectTypeException();
+    }
+
+    public WebTarget getObjectURL (Client client) throws UnknownObjectTypeException, UnknownServiceException {
+        return getObjectURL(getService(client));
+    }
+
+    public WebTarget getObjectURL () throws UnknownServiceException, UnknownObjectTypeException {
+        return getObjectURL(getService());
+    }
 }

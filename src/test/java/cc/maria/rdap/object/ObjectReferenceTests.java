@@ -85,4 +85,39 @@ public class ObjectReferenceTests {
     public void testIPv4ServiceDiscovery () throws RDAPException {
         assertEquals(IPv4BootstrapRegistry.getInstance(testClient).getServiceURLForIP("45.151.215.1"), new ObjectReference("45.151.215.1").getService(testClient).getUri().toString());
     }
+
+    @Test
+    public void testASNURLDiscovery () throws RDAPException {
+        assertEquals("https://example.com/autnum/1234", new ObjectReference("AS1234", testClient.target("https://example.com/")).getObjectURL().getUri().toString());
+    }
+
+    @Test
+    public void testDomainURLDiscovery () throws RDAPException {
+        assertEquals("https://example.com/domain/example.com", new ObjectReference("example.com", testClient.target("https://example.com/"), ObjectType.DOMAIN).getObjectURL().getUri().toString());
+    }
+
+    @Test
+    public void testEntityDiscovery () throws RDAPException {
+        assertEquals("https://example.com/entity/EXAMPLE-EXAMPLE", new ObjectReference("EXAMPLE-EXAMPLE", testClient.target("https://example.com/"), ObjectType.ENTITY).getObjectURL().getUri().toString());
+    }
+
+    @Test
+    public void testIPv4URLDiscovery () throws RDAPException {
+        assertEquals("https://example.com/ip/1.1.1.1", new ObjectReference("1.1.1.1", testClient.target("https://example.com/")).getObjectURL().getUri().toString());
+    }
+
+    @Test
+    public void testIPv4SubnetURLDiscovery () throws RDAPException {
+        assertEquals("https://example.com/ip/1.1.1.0/24", new ObjectReference("1.1.1.0/24", testClient.target("https://example.com/")).getObjectURL().getUri().toString());
+    }
+
+    @Test
+    public void testIPv6URLDiscovery () throws RDAPException {
+        assertEquals("https://example.com/ip/2001:0db8:85a3::8a2e:0370:7334", new ObjectReference("2001:0db8:85a3::8a2e:0370:7334", testClient.target("https://example.com/")).getObjectURL().getUri().toString());
+    }
+
+    @Test
+    public void testIPv6SubnetURLDiscovery () throws RDAPException {
+        assertEquals("https://example.com/ip/2001:0db8:85a3::/48", new ObjectReference("2001:0db8:85a3::/48", testClient.target("https://example.com/")).getObjectURL().getUri().toString());
+    }
 }
