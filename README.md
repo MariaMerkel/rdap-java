@@ -10,7 +10,7 @@ This library supports bootstrapping via the IANA bootstrap registries as defined
 ## Compatibility
 This client library implements the following standards:
 - [RFC 7480 (RDAP over HTTP)](https://datatracker.ietf.org/doc/html/rfc7480)
-- [RFC 8056 (RDAP-EPP status mapping) (WIP)](https://datatracker.ietf.org/doc/html/rfc8056)
+- [RFC 8056 (RDAP-EPP status mapping) (TODO: Tests)](https://datatracker.ietf.org/doc/html/rfc8056)
 - [RFC 8521 (RDAP object tagging)](https://datatracker.ietf.org/doc/html/rfc8521)
 - [RFC 9082 (RDAP query format)](https://datatracker.ietf.org/doc/html/rfc9082)
 - [RFC 9083 (RDAP JSON responses) (TODO: Tests)](https://datatracker.ietf.org/doc/html/rfc9083)
@@ -39,6 +39,7 @@ Auto-detection will not occur if a type is set in the object reference. Handle c
 ## Planned Additions
 - Support for commonly used extensions (see https://www.iana.org/assignments/rdap-extensions/rdap-extensions.xhtml)
 - Detection of excessive caches and circumvention of those (see RFC 7480 Appendix B)
+- Merging responses from multiple responsible servers (e.g. registrar and registry)
 
 ## Builds and Javadocs
 Build outputs for each version can be found at https://releases.maria.dev/rdap-java/. Javadocs for each version can be found at https://javadocs.maria.dev/rdap-java/. Build outputs and Javadocs for snapshots will be overwritten every time a new version of the snapshot is built.

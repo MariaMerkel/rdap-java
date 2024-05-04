@@ -18,6 +18,7 @@ package cc.maria.rdap.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 @JsonIgnoreProperties (ignoreUnknown = true)
@@ -125,5 +126,110 @@ public class ObjectClass {
 
     public EntityObjectClass getNOCContact () {
         return getEntityByRole("noc");
+    }
+
+    public String[] getEPPStatus () {
+        ArrayList<String> eppStatus = new ArrayList<>();
+        for (String s : status) {
+            switch (s) {
+                case "add period":
+                    eppStatus.add("addPeriod");
+                    break;
+
+                case "auto renew period":
+                    eppStatus.add("autoRenewPeriod");
+                    break;
+
+                case "client delete prohibited":
+                    eppStatus.add("clientDeleteProhibited");
+                    break;
+
+                case "client hold":
+                    eppStatus.add("clientHold");
+                    break;
+
+                case "client renew prohibited":
+                    eppStatus.add("clientRenewProhibited");
+                    break;
+
+                case "client transfer prohibited":
+                    eppStatus.add("clientTransferProhibited");
+                    break;
+
+                case "client update prohibited":
+                    eppStatus.add("clientUpdateProhibited");
+                    break;
+
+                case "inactive":
+                    eppStatus.add("inactive");
+                    break;
+
+                case "associated":
+                    eppStatus.add("linked");
+                    break;
+
+                case "active":
+                    eppStatus.add("ok");
+                    break;
+
+                case "pending create":
+                    eppStatus.add("pendingCreate");
+                    break;
+
+                case "pending delete":
+                    eppStatus.add("pendingDelete");
+                    break;
+
+                case "pending renew":
+                    eppStatus.add("pendingRenew");
+                    break;
+
+                case "pending restore":
+                    eppStatus.add("pendingRestore");
+                    break;
+
+                case "pending transfer":
+                    eppStatus.add("pendingTransfer");
+                    break;
+
+                case "pending update":
+                    eppStatus.add("pendingUpdate");
+                    break;
+
+                case "redemption period":
+                    eppStatus.add("redemptionPeriod");
+                    break;
+
+                case "renew period":
+                    eppStatus.add("renewPeriod");
+                    break;
+
+                case "server delete prohibited":
+                    eppStatus.add("serverDeleteProhibited");
+                    break;
+
+                case "server renew prohibited":
+                    eppStatus.add("serverRenewProhibited");
+                    break;
+
+                case "server transfer prohibited":
+                    eppStatus.add("serverTransferProhibited");
+                    break;
+
+                case "server update prohibited":
+                    eppStatus.add("serverUpdateProhibited");
+                    break;
+
+                case "server hold":
+                    eppStatus.add("serverHold");
+                    break;
+
+                case "transfer period":
+                    eppStatus.add("transferPeriod");
+                    break;
+            }
+        }
+
+        return eppStatus.toArray(new String[0]);
     }
 }
