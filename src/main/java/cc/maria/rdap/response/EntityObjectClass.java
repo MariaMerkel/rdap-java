@@ -16,12 +16,22 @@
 
 package cc.maria.rdap.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonNode;
+import ezvcard.Ezvcard;
+import ezvcard.VCard;
+
+@JsonIgnoreProperties (ignoreUnknown = true)
 public class EntityObjectClass extends ObjectClass {
     private String[] roles;
     private PublicId[] publicIds;
-    public Event asEventActor;
-    public IPNetworkObjectClass networks;
-    public AutnumObjectClass autnums;
+    private Event asEventActor;
+    private IPNetworkObjectClass networks;
+    private AutnumObjectClass autnums;
+
+    @JsonProperty ("vcardArray")
+    private JsonNode vcardArray;
 
     public AutnumObjectClass getAutnums() {
         return autnums;
@@ -41,5 +51,9 @@ public class EntityObjectClass extends ObjectClass {
 
     public String[] getRoles() {
         return roles;
+    }
+
+    public VCard getvCard() {
+        return Ezvcard.parseJson(vcardArray.toString()).first();
     }
 }

@@ -16,6 +16,9 @@
 
 package cc.maria.rdap.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties (ignoreUnknown = true)
 public class NameserverIPAdresses {
     private String[] v4;
     private String[] v6;

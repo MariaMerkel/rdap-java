@@ -16,6 +16,9 @@
 
 package cc.maria.rdap.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties (ignoreUnknown=true)
 public class SecureDNS {
     private boolean zoneSigned;
     private boolean delegationSigned;

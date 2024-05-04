@@ -16,14 +16,17 @@
 
 package cc.maria.rdap.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.time.LocalDateTime;
 
+@JsonIgnoreProperties (ignoreUnknown = true)
 public class Event {
     private String eventAction;
     private String eventActor;
-    private LocalDateTime eventDate;
+    private String eventDate;
 
-    public LocalDateTime getEventDate() {
+    public String getEventDate() {
         return eventDate;
     }
 

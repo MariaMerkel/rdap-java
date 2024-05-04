@@ -16,12 +16,16 @@
 
 package cc.maria.rdap.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties (ignoreUnknown = true)
 public class DomainObjectClass extends ObjectClass {
     private String ldhName;
     private String unicodeName;
     private DomainVariant[] variants;
     private NameserverObjectClass[] nameservers;
     private IPNetworkObjectClass network;
+    private SecureDNS secureDNS;
 
     public String getLdhName() {
         return ldhName;
@@ -41,5 +45,9 @@ public class DomainObjectClass extends ObjectClass {
 
     public NameserverObjectClass[] getNameservers() {
         return nameservers;
+    }
+
+    public SecureDNS getSecureDNS() {
+        return secureDNS;
     }
 }

@@ -16,8 +16,10 @@
 
 package cc.maria.rdap.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import inet.ipaddr.IPAddress;
 
+@JsonIgnoreProperties (ignoreUnknown = true)
 public class IPNetworkObjectClass extends ObjectClass {
     private String startAddress;
     private String endAddress;
