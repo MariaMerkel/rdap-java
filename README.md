@@ -33,7 +33,7 @@ Auto-detection will not occur if a type is set in the object reference. Handle c
 ## Known Limitations
 - The library does not implement retries in case of rate limiting (RFC 7480 5.5) because correct handling will depend on the application
 - The library does not distinguish between object classes and response bodies. Therefore, it allows RDAP Conformance and Notices objects on any object class, instead of just the top level response itself as specified by RFC 9083.
-- The library does not implement [RFC 8605 (RDAP vCard extensions)](https://datatracker.ietf.org/doc/html/rfc8605). The properties specified there can be extracted from the VCard object as raw properties.
+- The library does not implement [RFC 8605 (RDAP vCard extensions)](https://datatracker.ietf.org/doc/html/rfc8605). The properties specified there can be extracted from the VCard object as raw properties. Helper functionality for this might be added later on.
 - RFC 9083 does not specify the date time format to be used in events. An implementation that parses all known used formats is planned, right now the field is simply returned as a String by the library.
 
 ## Planned Additions
