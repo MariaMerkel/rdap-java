@@ -9,12 +9,13 @@ This library supports bootstrapping via the IANA bootstrap registries as defined
 
 ## Compatibility
 This client library implements the following standards:
+- [RFC 7095 (JSON vCards (jCard)) (WIP)](https://datatracker.ietf.org/doc/html/rfc7095)
 - [RFC 7480 (RDAP over HTTP)](https://datatracker.ietf.org/doc/html/rfc7480)
 - [RFC 8056 (RDAP-EPP status mapping) (WIP)](https://datatracker.ietf.org/doc/html/rfc8056)
 - [RFC 8521 (RDAP object tagging)](https://datatracker.ietf.org/doc/html/rfc8521)
 - [RFC 8605 (RDAP vCard extensions) (WIP)](https://datatracker.ietf.org/doc/html/rfc8605)
 - [RFC 9082 (RDAP query format)](https://datatracker.ietf.org/doc/html/rfc9082)
-- [RFC 9083 (RDAP JSON responses) (WIP)](https://datatracker.ietf.org/doc/html/rfc9083)
+- [RFC 9083 (RDAP JSON responses)](https://datatracker.ietf.org/doc/html/rfc9083)
 - [RFC 9224 (RDAP server discovery)](https://datatracker.ietf.org/doc/html/rfc9224)
 
 ## Handle Correction and Type Detection
@@ -32,7 +33,8 @@ Auto-detection rules are evaluated in the order they are listed above and the fi
 Auto-detection will not occur if a type is set in the object reference. Handle corrections cannot be disabled, but if they cause issues (with the correct type set), this is a bug and should be reported accordingly. Handle corrections are ran after auto-detection and are thus applied to auto-detected types as well.
 
 ## Known Limitations
-- The client library does not implement retries in case of rate limiting (RFC 7480 5.5) because correct handling will depend on the application
+- The library does not implement retries in case of rate limiting (RFC 7480 5.5) because correct handling will depend on the application
+- The library does not distinguish between object classes and response bodies. Therefore, it allows RDAP Conformance and Notices objects on any object class, instead of just the top level response itself as specified by RFC 9083. 
 
 ## Planned Additions
 - Support for commonly used extensions (see https://www.iana.org/assignments/rdap-extensions/rdap-extensions.xhtml)
