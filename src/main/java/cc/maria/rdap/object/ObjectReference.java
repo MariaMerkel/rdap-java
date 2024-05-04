@@ -89,7 +89,7 @@ public class ObjectReference {
                 return client.target(serviceURL);
 
             case DOMAIN:
-                serviceURL = DomainBootstrapRegistry.getInstance(client).getServiceURL(getHandle());
+                serviceURL = DomainBootstrapRegistry.getInstance(client).getServiceURLForFQDN(getHandle());
                 if (serviceURL == null) throw new UnknownServiceException();
                 return client.target(serviceURL);
 

@@ -1,5 +1,9 @@
 # RDAP client library for Java
 
+This is the (to my knowledge) only comprehensive Java client library for RDAP, the successor of Whois.
+
+Right now, this library is still in development and not usable yet. It should be usable and complete soon (hopefully)!
+
 ## Bootstrapping and Redirectors
 This library supports bootstrapping via the IANA bootstrap registries as defined in RFC 9224, but a redirector (as defined in RFC 7480 Appendix C) can be used by setting it as the service URL when creating an RDAPClient instance.
 
