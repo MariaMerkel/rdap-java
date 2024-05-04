@@ -18,7 +18,16 @@ package cc.maria.rdap;
 
 import cc.maria.rdap.bootstrap.DomainBootstrapRegistry;
 
+import cc.maria.rdap.exception.InvalidObjectTypeException;
+import cc.maria.rdap.exception.RDAPException;
+import cc.maria.rdap.exception.UnknownObjectTypeException;
+import cc.maria.rdap.exception.UnknownServiceException;
 import cc.maria.rdap.http.RDAPRequestFilter;
+import cc.maria.rdap.object.ObjectReference;
+import cc.maria.rdap.object.ObjectType;
+import cc.maria.rdap.response.*;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.client.WebTarget;
@@ -52,14 +61,12 @@ public class RDAPClient {
         this.serviceURL = serviceURL;
     }
 
-    public void sendTestRequest () {
-        getWebTarget("example.com").path("domain/example.com").request().get();
-    }
-
     /**
      * Get the service URL for a given object.
      * If the service URL is not set, the service URL will be looked up from the bootstrap registry.
      * NOTE: RDAP servers can further redirect the client to another service URL. This method returns the first responsible service URL.
+     *
+     * TODO: Fix
      *
      * @param object The object to be looked up
      * @return The service URL responsible for the object
@@ -71,5 +78,52 @@ public class RDAPClient {
 
     public WebTarget getWebTarget (String object) {
         return client.target(getServiceURL(object));
+    }
+
+    public ObjectClass query (ObjectReference objectReference) throws RDAPException, JsonProcessingException {
+        String json = objectReference.getObjectURL(client).request().get().readEntity(String.class);
+        ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
+
+        switch (objectReference.getType()) {
+            case ASN:
+                return mapper.readValue(json, AutnumObjectClass.class);
+
+            case DOMAIN:
+                return mapper.readValue(json, DomainObjectClass.class);
+
+            case ENTITY:
+                return mapper.readValue(json, EntityObjectClass.class);
+
+            case IPv4:
+            case IPv6:
+                return mapper.readValue(json, IPNetworkObjectClass.class);
+        }
+
+        // This will never happen as objectReference.getType will throw an exception if no type is known
+        return null;
+    }
+
+    public AutnumObjectClass queryAutnum (ObjectReference objectReference) throws RDAPException, JsonProcessingException {
+        if (objectReference.getType() != ObjectType.ASN) throw new InvalidObjectTypeException();
+
+        return (AutnumObjectClass) query(objectReference);
+    }
+
+    public DomainObjectClass queryDomain (ObjectReference objectReference) throws RDAPException, JsonProcessingException {
+        if (objectReference.getType() != ObjectType.DOMAIN) throw new InvalidObjectTypeException();
+
+        return (DomainObjectClass) query(objectReference);
+    }
+
+    public EntityObjectClass queryEntity (ObjectReference objectReference) throws RDAPException, JsonProcessingException {
+        if (objectReference.getType() != ObjectType.ENTITY) throw new InvalidObjectTypeException();
+
+        return (EntityObjectClass) query(objectReference);
+    }
+
+    public IPNetworkObjectClass queryIPNetwork (ObjectReference objectReference) throws RDAPException, JsonProcessingException {
+        if (objectReference.getType() != ObjectType.IPv4 && objectReference.getType() != ObjectType.IPv6) throw new InvalidObjectTypeException();
+
+        return (IPNetworkObjectClass) query(objectReference);
     }
 }
