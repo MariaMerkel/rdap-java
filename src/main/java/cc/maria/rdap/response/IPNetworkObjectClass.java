@@ -17,13 +17,12 @@
 package cc.maria.rdap.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import inet.ipaddr.IPAddress;
 
 @JsonIgnoreProperties (ignoreUnknown = true)
 public class IPNetworkObjectClass extends ObjectClass {
     private String startAddress;
     private String endAddress;
-    private IPAddress.IPVersion ipVersion;
+    private ipVersion ipVersion;
     private String name;
     private String type;
     private String country;
@@ -33,7 +32,7 @@ public class IPNetworkObjectClass extends ObjectClass {
         return type;
     }
 
-    public IPAddress.IPVersion getIpVersion() {
+    public ipVersion getIpVersion() {
         return ipVersion;
     }
 
