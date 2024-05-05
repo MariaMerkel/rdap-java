@@ -16,6 +16,7 @@
 
 package cc.maria.rdap.object;
 
+import cc.maria.rdap.RDAPClient;
 import cc.maria.rdap.bootstrap.ASNBootstrapRegistry;
 import cc.maria.rdap.bootstrap.IPv4BootstrapRegistry;
 import cc.maria.rdap.exception.RDAPException;
@@ -75,17 +76,17 @@ public class ObjectReferenceTests {
 
     @Test
     public void testSetServiceWithClient () throws RDAPException {
-        assertEquals("https://example.com/", new ObjectReference("AS1234", testClient.target("https://example.com/")).getService(testClient).getUri().toString());
+        assertEquals("https://example.com/", new ObjectReference("AS1234", testClient.target("https://example.com/")).getService(new RDAPClient(testClient)).getUri().toString());
     }
 
     @Test
     public void testASNServiceDiscovery () throws RDAPException {
-        assertEquals(ASNBootstrapRegistry.getInstance(testClient).getServiceURLForASN(207908), new ObjectReference("AS207908").getService(testClient).getUri().toString());
+        assertEquals(ASNBootstrapRegistry.getInstance(testClient).getServiceURLForASN(207908), new ObjectReference("AS207908").getService(new RDAPClient(testClient)).getUri().toString());
     }
 
     @Test
     public void testIPv4ServiceDiscovery () throws RDAPException {
-        assertEquals(IPv4BootstrapRegistry.getInstance(testClient).getServiceURLForIP("45.151.215.1"), new ObjectReference("45.151.215.1").getService(testClient).getUri().toString());
+        assertEquals(IPv4BootstrapRegistry.getInstance(testClient).getServiceURLForIP("45.151.215.1"), new ObjectReference("45.151.215.1").getService(new RDAPClient(testClient)).getUri().toString());
     }
 
     @Test
