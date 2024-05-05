@@ -16,11 +16,11 @@
 
 package cc.maria.rdap.object;
 
+import cc.maria.rdap.RDAPClient;
 import cc.maria.rdap.bootstrap.*;
 import cc.maria.rdap.exception.UnknownObjectTypeException;
 import cc.maria.rdap.exception.UnknownServiceException;
 import inet.ipaddr.IPAddressString;
-import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.WebTarget;
 
 public class ObjectReference {
@@ -78,35 +78,37 @@ public class ObjectReference {
         throw new UnknownServiceException();
     }
 
-    public WebTarget getService (Client client) throws UnknownServiceException, UnknownObjectTypeException {
+    public WebTarget getService (RDAPClient client) throws UnknownServiceException, UnknownObjectTypeException {
         if (service != null) return service;
+
+        if (client.getServiceURL() != null) return client.getClient().target(client.getServiceURL());
 
         String serviceURL;
         switch (getType()) {
             case ASN:
-                serviceURL = ASNBootstrapRegistry.getInstance(client).getServiceURLForASN(getHandle());
+                serviceURL = ASNBootstrapRegistry.getInstance(client.getClient()).getServiceURLForASN(getHandle());
                 if (serviceURL == null) throw new UnknownServiceException();
-                return client.target(serviceURL);
+                return client.getClient().target(serviceURL);
 
             case DOMAIN:
-                serviceURL = DomainBootstrapRegistry.getInstance(client).getServiceURLForFQDN(getHandle());
+                serviceURL = DomainBootstrapRegistry.getInstance(client.getClient()).getServiceURLForFQDN(getHandle());
                 if (serviceURL == null) throw new UnknownServiceException();
-                return client.target(serviceURL);
+                return client.getClient().target(serviceURL);
 
             case ENTITY:
-                serviceURL = EntityBootstrapRegistry.getInstance(client).getServiceURLForHandle(getHandle());
+                serviceURL = EntityBootstrapRegistry.getInstance(client.getClient()).getServiceURLForHandle(getHandle());
                 if (serviceURL == null) throw new UnknownServiceException();
-                return client.target(serviceURL);
+                return client.getClient().target(serviceURL);
 
             case IPv4:
-                serviceURL = IPv4BootstrapRegistry.getInstance(client).getServiceURLForIP(getHandle());
+                serviceURL = IPv4BootstrapRegistry.getInstance(client.getClient()).getServiceURLForIP(getHandle());
                 if (serviceURL == null) throw new UnknownServiceException();
-                return client.target(serviceURL);
+                return client.getClient().target(serviceURL);
 
             case IPv6:
-                serviceURL = IPv6BootstrapRegistry.getInstance(client).getServiceURLForIP(getHandle());
+                serviceURL = IPv6BootstrapRegistry.getInstance(client.getClient()).getServiceURLForIP(getHandle());
                 if (serviceURL == null) throw new UnknownServiceException();
-                return client.target(serviceURL);
+                return client.getClient().target(serviceURL);
         }
 
         throw new UnknownServiceException();
@@ -132,7 +134,7 @@ public class ObjectReference {
         throw new UnknownObjectTypeException();
     }
 
-    public WebTarget getObjectURL (Client client) throws UnknownObjectTypeException, UnknownServiceException {
+    public WebTarget getObjectURL (RDAPClient client) throws UnknownObjectTypeException, UnknownServiceException {
         return getObjectURL(getService(client));
     }
 

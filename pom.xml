@@ -6,7 +6,7 @@
 
     <groupId>cc.maria.rdap-java</groupId>
     <artifactId>rdap-java</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.0.1</version>
 
     <name>RDAP client library for Java</name>
     <description>A comprehensive client library for RDAP, the successor protocol to Whois</description>

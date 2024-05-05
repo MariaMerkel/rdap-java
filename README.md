@@ -4,6 +4,58 @@ This is the (to my knowledge) only comprehensive Java client library for RDAP, t
 
 Right now, this library is still in development. It is usable and should be production ready, but frequent changes will still be made.
 
+## Installation
+The library is available on Maven Central and can easily be added to Maven projects using the following dependency block:
+```
+<dependency>
+    <groupId>cc.maria.rdap-java</groupId>
+    <artifactId>rdap-java</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+
+If your project does not use a dependency manager, you can download pre-built files from the repository at https://releases.maria.dev/rdap-java. You will usually want to use the latest non-snapshot version. You can find additional information in the [Builds and Javadocs](#builds-and-javadocs) section.
+
+## Usage
+Basic usage of the library is very simple:
+
+```java
+import cc.maria.rdap.RDAPClient;
+import cc.maria.rdap.object.DomainObjectClass;
+import cc.maria.rdap.object.ObjectReference;
+import cc.maria.rdap.object.ObjectType;
+
+public static void queryDomain () {
+    DomainObjectClass domain = new RDAPClient().queryDomain(new ObjectReference("maria.cc", ObjectType.DOMAIN));
+    System.out.println(domain.getNameservers()[0].getLdhName());
+}
+```
+
+Types other than domains can be implicitly detected:
+
+```java
+import cc.maria.rdap.RDAPClient;
+import cc.maria.rdap.object.IPNetworkObjectClass;
+
+public static void queryIP() {
+    IPNetworkObjectClass ipNetwork = new RDAPClient().queryIPNetwork(new ObjectReference("2.56.11.1"));
+    System.out.println(ipNetwork.getName());
+}
+```
+
+You can also explicitly specify the RDAP server to query:
+
+```java
+import cc.maria.rdap.RDAPClient;
+import cc.maria.rdap.object.DomainObjectClass;
+import cc.maria.rdap.object.ObjectReference;
+
+public static void queryDomainWithSpecificServiceURL() {
+    DomainObjectClass domain = new RDAPClient("https://rdap.markmonitor.com/rdap/").queryDomain(new ObjectReference("google.com", ObjectType.DOMAIN));
+    System.out.println(domain.getRegistrantContact().getvCard().getOrganization().getValues().get(0));
+}
+```
+
 ## Bootstrapping and Redirectors
 This library supports bootstrapping via the IANA bootstrap registries as defined in RFC 9224, but a redirector (as defined in RFC 7480 Appendix C) can be used by setting it as the service URL when creating an RDAPClient instance.
 
@@ -45,3 +97,11 @@ Auto-detection will not occur if a type is set in the object reference. Handle c
 Build outputs for each version can be found at https://releases.maria.dev/rdap-java/. Javadocs for each version can be found at https://javadocs.maria.dev/rdap-java/. Build outputs and Javadocs for snapshots will be overwritten every time a new version of the snapshot is built.
 
 The CI is available publicly at https://teamcity.maria.dev/project/RdapJava?guest=1. Build outputs for all snapshot builds can be found there.
+
+## Changelog
+### 1.0.1
+- Fixed custom service URLs
+- Added application/json as an accepted response type as MarkMonitor will refuse to respond to application/rdap+json only
+
+### 1.0.0
+- Initial Release

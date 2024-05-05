@@ -22,7 +22,7 @@ import jakarta.ws.rs.client.ClientRequestFilter;
 public class RDAPRequestFilter implements ClientRequestFilter {
     @Override
     public void filter(ClientRequestContext context) {
-        context.getHeaders().add("Accept", "application/rdap+json");
+        context.getHeaders().add("Accept", "application/rdap+json,application/json");
         context.getHeaders().add("User-Agent", "RDAP-Java/1.0");
     }
 }

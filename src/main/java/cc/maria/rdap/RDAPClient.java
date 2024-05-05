@@ -72,10 +72,6 @@ public class RDAPClient {
         return DomainBootstrapRegistry.getInstance(client).getServiceURLForFQDN(object);
     }
 
-    public WebTarget getWebTarget (String object) {
-        return client.target(getServiceURL(object));
-    }
-
     /**
      * Query the responsible RDAP service for a specified object
      *
@@ -86,7 +82,7 @@ public class RDAPClient {
      * @throws JsonProcessingException Error in JSON parsing
      */
     public ObjectClass query (ObjectReference objectReference) throws RDAPException, JsonProcessingException {
-        String json = objectReference.getObjectURL(client).request().get().readEntity(String.class);
+        String json = objectReference.getObjectURL(this).request().get().readEntity(String.class);
         ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();
 
         switch (objectReference.getType()) {
@@ -130,5 +126,18 @@ public class RDAPClient {
         if (objectReference.getType() != ObjectType.IPv4 && objectReference.getType() != ObjectType.IPv6) throw new InvalidObjectTypeException();
 
         return (IPNetworkObjectClass) query(objectReference);
+    }
+
+    /**
+     * Get custom service URL set during initialization
+     *
+     * @return Service URL override
+     */
+    public String getServiceURL() {
+        return serviceURL;
+    }
+
+    public Client getClient() {
+        return client;
     }
 }
