@@ -20,12 +20,8 @@ import cc.maria.rdap.bootstrap.DomainBootstrapRegistry;
 
 import cc.maria.rdap.exception.InvalidObjectTypeException;
 import cc.maria.rdap.exception.RDAPException;
-import cc.maria.rdap.exception.UnknownObjectTypeException;
-import cc.maria.rdap.exception.UnknownServiceException;
 import cc.maria.rdap.http.RDAPRequestFilter;
-import cc.maria.rdap.object.ObjectReference;
-import cc.maria.rdap.object.ObjectType;
-import cc.maria.rdap.response.*;
+import cc.maria.rdap.object.*;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.ws.rs.client.Client;

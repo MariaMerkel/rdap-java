@@ -14,20 +14,25 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.response;
+package cc.maria.rdap.object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties (ignoreUnknown = true)
-public class PublicId {
-    private String type;
-    private String identifier;
+public class NoticeOrRemark {
+    private String title;
+    private String[] description;
+    private Link[] links;
 
-    public String getType() {
-        return type;
+    public Link[] getLinks() {
+        return links;
     }
 
-    public String getIdentifier() {
-        return identifier;
+    public String getTitle() {
+        return title;
+    }
+
+    public String[] getDescription() {
+        return description;
     }
 }

@@ -14,7 +14,7 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.response;
+package cc.maria.rdap.object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

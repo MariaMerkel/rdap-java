@@ -14,15 +14,25 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.response;
+package cc.maria.rdap.object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties (ignoreUnknown=true)
-public class SecureDNS {
-    private boolean zoneSigned;
-    private boolean delegationSigned;
-    private int maxSigLife;
-    private DSData[] dsData;
-    private KeyData[] keyData;
+@JsonIgnoreProperties (ignoreUnknown = true)
+public class DomainVariant {
+    private String[] relation;
+    private String idnTable;
+    private DomainVariantName[] variantNames;
+
+    public DomainVariantName[] getVariantNames() {
+        return variantNames;
+    }
+
+    public String getIdnTable() {
+        return idnTable;
+    }
+
+    public String[] getRelation() {
+        return relation;
+    }
 }

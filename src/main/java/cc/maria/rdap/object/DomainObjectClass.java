@@ -14,25 +14,40 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.response;
+package cc.maria.rdap.object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties (ignoreUnknown = true)
-public class ErrorResponseBody extends ObjectClass {
-    private int errorCode;
-    private String title;
-    private String[] description;
+public class DomainObjectClass extends ObjectClass {
+    private String ldhName;
+    private String unicodeName;
+    private DomainVariant[] variants;
+    private NameserverObjectClass[] nameservers;
+    private IPNetworkObjectClass network;
+    private SecureDNS secureDNS;
 
-    public String[] getDescription() {
-        return description;
+    public String getLdhName() {
+        return ldhName;
     }
 
-    public String getTitle() {
-        return title;
+    public String getUnicodeName() {
+        return unicodeName;
     }
 
-    public int getErrorCode() {
-        return errorCode;
+    public DomainVariant[] getVariants() {
+        return variants;
+    }
+
+    public IPNetworkObjectClass getNetwork() {
+        return network;
+    }
+
+    public NameserverObjectClass[] getNameservers() {
+        return nameservers;
+    }
+
+    public SecureDNS getSecureDNS() {
+        return secureDNS;
     }
 }

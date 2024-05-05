@@ -2,7 +2,7 @@
 
 This is the (to my knowledge) only comprehensive Java client library for RDAP, the successor of Whois.
 
-Right now, this library is still in development. It is usable, but there is no full test coverage yet so production use is not recommended.
+Right now, this library is still in development. It is usable and should be production ready, but frequent changes will still be made.
 
 ## Bootstrapping and Redirectors
 This library supports bootstrapping via the IANA bootstrap registries as defined in RFC 9224, but a redirector (as defined in RFC 7480 Appendix C) can be used by setting it as the service URL when creating an RDAPClient instance.
@@ -10,10 +10,10 @@ This library supports bootstrapping via the IANA bootstrap registries as defined
 ## Compatibility
 This client library implements the following standards:
 - [RFC 7480 (RDAP over HTTP)](https://datatracker.ietf.org/doc/html/rfc7480)
-- [RFC 8056 (RDAP-EPP status mapping) (TODO: Tests)](https://datatracker.ietf.org/doc/html/rfc8056)
+- [RFC 8056 (RDAP-EPP status mapping)](https://datatracker.ietf.org/doc/html/rfc8056)
 - [RFC 8521 (RDAP object tagging)](https://datatracker.ietf.org/doc/html/rfc8521)
 - [RFC 9082 (RDAP query format)](https://datatracker.ietf.org/doc/html/rfc9082)
-- [RFC 9083 (RDAP JSON responses) (TODO: Tests)](https://datatracker.ietf.org/doc/html/rfc9083)
+- [RFC 9083 (RDAP JSON responses)](https://datatracker.ietf.org/doc/html/rfc9083)
 - [RFC 9224 (RDAP server discovery)](https://datatracker.ietf.org/doc/html/rfc9224)
 
 ## Handle Correction and Type Detection

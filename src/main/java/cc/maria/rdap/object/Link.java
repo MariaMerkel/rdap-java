@@ -14,49 +14,30 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.response;
+package cc.maria.rdap.object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties (ignoreUnknown = true)
-public class IPNetworkObjectClass extends ObjectClass {
-    private String startAddress;
-    private String endAddress;
-    private ipVersion ipVersion;
-    private String name;
+public class Link {
+    private String value;
+    private String rel;
+    private String href;
     private String type;
-    private String country;
-    private String parentHandle;
+
+    public String getHref() {
+        return href;
+    }
+
+    public String getRel() {
+        return rel;
+    }
 
     public String getType() {
         return type;
     }
 
-    public ipVersion getIpVersion() {
-        return ipVersion;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public String getEndAddress() {
-        return endAddress;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getParentHandle() {
-        return parentHandle;
-    }
-
-    public String getStartAddress() {
-        return startAddress;
-    }
-
-    public enum ipVersion {
-        v4, v6
+    public String getValue() {
+        return value;
     }
 }

@@ -14,20 +14,40 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.response;
+package cc.maria.rdap.object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties (ignoreUnknown = true)
-public class NameserverIPAdresses {
-    private String[] v4;
-    private String[] v6;
+public class KeyData {
+    private int flags;
+    private int protocol;
+    private int algorithm;
+    private String publicKey;
+    private Event[] events;
+    private Link[] links;
 
-    public String[] getV4() {
-        return v4;
+    public Event[] getEvents() {
+        return events;
     }
 
-    public String[] getV6() {
-        return v6;
+    public int getAlgorithm() {
+        return algorithm;
+    }
+
+    public int getFlags() {
+        return flags;
+    }
+
+    public int getProtocol() {
+        return protocol;
+    }
+
+    public String getPublicKey() {
+        return publicKey;
+    }
+
+    public Link[] getLinks() {
+        return links;
     }
 }

@@ -14,25 +14,35 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.response;
+package cc.maria.rdap.object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties (ignoreUnknown = true)
-public class NoticeOrRemark {
-    private String title;
-    private String[] description;
-    private Link[] links;
+public class AutnumObjectClass extends ObjectClass {
+    private int startAutnum;
+    private int endAutnum;
+    private String name;
+    private String type;
+    private String country;
 
-    public Link[] getLinks() {
-        return links;
+    public String getCountry() {
+        return country;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public String[] getDescription() {
-        return description;
+    public String getType() {
+        return type;
+    }
+
+    public int getEndAutnum() {
+        return endAutnum;
+    }
+
+    public int getStartAutnum() {
+        return startAutnum;
     }
 }

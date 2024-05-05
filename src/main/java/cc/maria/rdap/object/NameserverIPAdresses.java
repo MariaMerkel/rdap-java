@@ -14,20 +14,20 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.response;
+package cc.maria.rdap.object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties (ignoreUnknown = true)
-public class DomainVariantName {
-    private String ldhName;
-    private String unicodeName;
+public class NameserverIPAdresses {
+    private String[] v4;
+    private String[] v6;
 
-    public String getLdhName() {
-        return ldhName;
+    public String[] getV4() {
+        return v4;
     }
 
-    public String getUnicodeName() {
-        return unicodeName;
+    public String[] getV6() {
+        return v6;
     }
 }

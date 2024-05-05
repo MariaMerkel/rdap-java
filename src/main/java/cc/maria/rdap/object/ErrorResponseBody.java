@@ -14,40 +14,25 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.response;
+package cc.maria.rdap.object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties (ignoreUnknown = true)
-public class DSData {
-    private int keyTag;
-    private int algorithm;
-    private String digest;
-    private int digestType;
-    private Event[] events;
-    private Link[] links;
+public class ErrorResponseBody extends ObjectClass {
+    private int errorCode;
+    private String title;
+    private String[] description;
 
-    public int getAlgorithm() {
-        return algorithm;
+    public String[] getDescription() {
+        return description;
     }
 
-    public Event[] getEvents() {
-        return events;
+    public String getTitle() {
+        return title;
     }
 
-    public Link[] getLinks() {
-        return links;
-    }
-
-    public int getDigestType() {
-        return digestType;
-    }
-
-    public int getKeyTag() {
-        return keyTag;
-    }
-
-    public String getDigest() {
-        return digest;
+    public int getErrorCode() {
+        return errorCode;
     }
 }

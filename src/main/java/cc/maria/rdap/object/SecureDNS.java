@@ -14,35 +14,15 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.response;
+package cc.maria.rdap.object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties (ignoreUnknown = true)
-public class AutnumObjectClass extends ObjectClass {
-    private int startAutnum;
-    private int endAutnum;
-    private String name;
-    private String type;
-    private String country;
-
-    public String getCountry() {
-        return country;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public int getEndAutnum() {
-        return endAutnum;
-    }
-
-    public int getStartAutnum() {
-        return startAutnum;
-    }
+@JsonIgnoreProperties (ignoreUnknown=true)
+public class SecureDNS {
+    private boolean zoneSigned;
+    private boolean delegationSigned;
+    private int maxSigLife;
+    private DSData[] dsData;
+    private KeyData[] keyData;
 }

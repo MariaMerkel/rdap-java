@@ -14,11 +14,9 @@
  * limitations under the license.
  */
 
-package cc.maria.rdap.response;
+package cc.maria.rdap.object;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-import java.time.LocalDateTime;
 
 @JsonIgnoreProperties (ignoreUnknown = true)
 public class Event {
