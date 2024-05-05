@@ -8,6 +8,32 @@
     <artifactId>rdap-java</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <name>RDAP client library for Java</name>
+    <description>A comprehensive client library for RDAP, the successor protocol to Whois</description>
+    <url>https://github.com/MariaMerkel/rdap-java</url>
+
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Maria Merkel</name>
+            <email>maria@maria.cc</email>
+            <organization>Maria Merkel</organization>
+            <organizationUrl>https://maria.cc</organizationUrl>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:git://github.com/MariaMerkel/rdap-java.git</connection>
+        <developerConnection>scm:git:ssh://github.com:MariaMerkel/rdap-java.git</developerConnection>
+        <url>https://github.com/MariaMerkel/rdap-java/tree/master</url>
+    </scm>
+
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
