@@ -10,7 +10,7 @@ The library is available on Maven Central and can easily be added to Maven proje
 <dependency>
     <groupId>cc.maria.rdap-java</groupId>
     <artifactId>rdap-java</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
