@@ -76,6 +76,15 @@ public class RDAPClient {
         return client.target(getServiceURL(object));
     }
 
+    /**
+     * Query the responsible RDAP service for a specified object
+     *
+     * @param objectReference The object to query for
+     * @return The object class returned by the server
+     *
+     * @throws RDAPException Error in the RDAP protocol
+     * @throws JsonProcessingException Error in JSON parsing
+     */
     public ObjectClass query (ObjectReference objectReference) throws RDAPException, JsonProcessingException {
         String json = objectReference.getObjectURL(client).request().get().readEntity(String.class);
         ObjectMapper mapper = new ObjectMapper().findAndRegisterModules();

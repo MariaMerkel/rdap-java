@@ -6,7 +6,7 @@
 
     <groupId>cc.maria.rdap-java</groupId>
     <artifactId>rdap-java</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1-SNAPSHOT</version>
 
     <name>RDAP client library for Java</name>
     <description>A comprehensive client library for RDAP, the successor protocol to Whois</description>
@@ -93,7 +93,7 @@
         <dependency>
             <groupId>com.github.seancfoley</groupId>
             <artifactId>ipaddress</artifactId>
-            <version>5.4.0</version>
+            <version>5.5.0</version>
         </dependency>
         <dependency>
             <groupId>com.googlecode.ez-vcard</groupId>
@@ -120,7 +120,7 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-rs-client</artifactId>
-            <version>4.0.2</version>
+            <version>4.0.4</version>
             <scope>runtime</scope>
         </dependency>
     </dependencies>
